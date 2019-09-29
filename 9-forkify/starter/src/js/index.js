@@ -5,11 +5,15 @@ import Axios from 'axios';
 //Search url https://www.food2fork.com/api/search
 
 const getData = async function(query) {
-  const key = 'e2e11bf7792a898129b4bbe90d214578';
+  try {
+    const key = 'e2e11bf7792a898129b4bbe90d214578';
 
-  const results = await Axios(
-    `https://www.food2fork.com/api/search?key=${key}&q=${query}`
-  );
-  console.log(results.data.recipes);
+    const results = await Axios(
+      `https://www.food2fork.com/api/search?key=${key}&q=${query}`
+    );
+    console.log(results.data.recipes);
+  } catch {
+    alert(error);
+  }
 };
 getData('curry');
