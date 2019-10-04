@@ -1,5 +1,5 @@
 import Search from './modals/Search';
-import { elements } from './views/base';
+import { elements, renderLoader, clearLoader } from './views/base';
 import * as searchView from './views/searchView';
 
 //This is the global state of our app
@@ -20,10 +20,12 @@ const controlSearch = async () => {
     //3>Prepare the user interface(loading spinner etc)
     searchView.removeQuery();
     searchView.removeResult();
+    renderLoader(elements.searchRes);
     //4>Search or recipes
     await state.search.getData(); //it waits for the promise to fulfill and then only the next line can execute
 
     //5>Render the results on the UI
+    clearLoader();
     searchView.renderResults(state.search.result);
   }
 };
