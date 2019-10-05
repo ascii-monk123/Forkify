@@ -1,4 +1,5 @@
 import Search from './modals/Search';
+import Recipe from './modals/Recipe';
 import { elements, renderLoader, clearLoader } from './views/base';
 import * as searchView from './views/searchView';
 
@@ -9,6 +10,9 @@ import * as searchView from './views/searchView';
 //4>Like recipe object
 const state = {};
 
+/**
+ * Search
+ * Controller */
 const controlSearch = async () => {
   //1>Get the query from view controller
   const query = searchView.getQuery(); //will be stored in this query
@@ -41,3 +45,10 @@ elements.searchRes.addEventListener('click', e => {
     searchView.renderResults(state.search.result, gotoPage);
   }
 });
+
+/**
+ * Recipe
+ * Controller */
+const r = new Recipe(47746);
+r.getRecipe();
+console.log(r);
