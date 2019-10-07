@@ -25,12 +25,17 @@ const controlSearch = async () => {
     searchView.removeQuery();
     searchView.removeResult();
     renderLoader(elements.searchRes);
-    //4>Search or recipes
-    await state.search.getData(); //it waits for the promise to fulfill and then only the next line can execute
+    try {
+      //4>Search or recipes
+      await state.search.getData(); //it waits for the promise to fulfill and then only the next line can execute
 
-    //5>Render the results on the UI
-    clearLoader();
-    searchView.renderResults(state.search.result);
+      //5>Render the results on the UI
+      clearLoader();
+      searchView.renderResults(state.search.result);
+    } catch (err) {
+      alert('Something wrong with search..');
+      clearLoader();
+    }
   }
 };
 elements.searchForm.addEventListener('submit', e => {
@@ -49,6 +54,31 @@ elements.searchRes.addEventListener('click', e => {
 /**
  * Recipe
  * Controller */
-const r = new Recipe(47746);
-r.getRecipe();
-console.log(r);
+const controlRecipe = async () => {
+  //Get the ID from the url
+  const id = window.location.hash.replace('#', ''); //The window.location is the entire url and the .hash gives the hash property
+  if (id) {
+    //Prepare the ui for changes
+    //Create a new recipe object
+    state.recipe = new Recipe(id);
+    try {
+      //Get the recipe data
+      await state.recipe.getRecipe();
+      //Calulate the servings and time
+      state.recipe.calcTime();
+      state.recipe.calcServings();
+      //Render recipe to the user
+      console.log(state);
+    } catch (err) {
+      alert('Error downloading the recipes');
+    }
+  }
+};
+
+//window.addEventListener('hashchange', controlRecipe);
+//winddow.addEventListener('load',controlRecipe);
+
+//The better and short method to add multiple event listeners to the same dom element
+['load', 'hashchange'].forEach(event =>
+  window.addEventListener(event, controlRecipe)
+);
