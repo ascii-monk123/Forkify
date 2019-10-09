@@ -2,6 +2,7 @@ import Search from './modals/Search';
 import Recipe from './modals/Recipe';
 import { elements, renderLoader, clearLoader } from './views/base';
 import * as searchView from './views/searchView';
+import * as recipeView from './views/recipeView';
 
 //This is the global state of our app
 //1>Search object
@@ -59,6 +60,8 @@ const controlRecipe = async () => {
   const id = window.location.hash.replace('#', ''); //The window.location is the entire url and the .hash gives the hash property
   if (id) {
     //Prepare the ui for changes
+    recipeView.clearRecipe();
+    renderLoader(elements.recipe);
     //Create a new recipe object
     state.recipe = new Recipe(id);
     try {
@@ -71,7 +74,8 @@ const controlRecipe = async () => {
       state.recipe.calcServings();
 
       //Render recipe to the user
-      console.log(state);
+      clearLoader();
+      recipeView.renderRecipe(state.recipe);
     } catch (err) {
       alert('Error downloading the recipes');
     }

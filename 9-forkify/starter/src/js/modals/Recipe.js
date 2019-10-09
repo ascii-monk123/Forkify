@@ -51,17 +51,18 @@ export default class Recipe {
       'cup',
       'pound'
     ];
+    const units = [...unitsSmall, 'kg', 'g'];
     const newIngredients = this.ingredients.map(ele => {
       //1.Uniform unit
       let ingredient = ele.toLowerCase();
       unitsLong.forEach((unit, i) => {
-        ingredient = ingredient.replace(unit, unitsSmall[i]);
+        ingredient = ingredient.replace(unit, units[i]);
       });
       //2.Remove parentheses
       ingredient = ingredient.replace(/ *\([^)]*\) */g, ' ');
       //3.Parse Ingredients into count, units,ingredients
       const arrIng = ingredient.split(' ');
-      const unitIndex = arrIng.findIndex(el2 => unitsSmall.includes(el2));
+      const unitIndex = arrIng.findIndex(el2 => units.includes(el2));
       let objIng;
       if (unitIndex > -1) {
         //There is a unit
