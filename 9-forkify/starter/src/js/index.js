@@ -62,6 +62,10 @@ const controlRecipe = async () => {
     //Prepare the ui for changes
     recipeView.clearRecipe();
     renderLoader(elements.recipe);
+    //Highlight the selected search icon
+    if (state.search) {
+      searchView.highlightSelected(id);
+    }
     //Create a new recipe object
     state.recipe = new Recipe(id);
     try {
@@ -77,6 +81,7 @@ const controlRecipe = async () => {
       clearLoader();
       recipeView.renderRecipe(state.recipe);
     } catch (err) {
+      console.log(err);
       alert('Error downloading the recipes');
     }
   }

@@ -8,6 +8,15 @@ export const removeResult = () => {
   elements.searchResList.innerHTML = '';
   elements.searchResPages.innerHTML = '';
 };
+export const highlightSelected = id => {
+  const everyResult = Array.from(document.querySelectorAll('.results__link'));
+  everyResult.forEach(elem => {
+    elem.classList.remove('results__link--active');
+  });
+  document
+    .querySelector(`a[href="#${id}"]`)
+    .classList.add('results__link--active');
+};
 
 //'Pasta with tomato and spinach'
 const limitRecipeTitle = (title, limit = 17) => {

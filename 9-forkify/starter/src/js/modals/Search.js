@@ -12,6 +12,7 @@ export default class Search {
 
       this.result = results.data.recipes;
     } catch (error) {
+      
       alert(error);
     }
   }
