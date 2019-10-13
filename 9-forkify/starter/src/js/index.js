@@ -1,5 +1,6 @@
 import Search from './modals/Search';
 import Recipe from './modals/Recipe';
+import List from './modals/List';
 import { elements, renderLoader, clearLoader } from './views/base';
 import * as searchView from './views/searchView';
 import * as recipeView from './views/recipeView';
@@ -17,7 +18,6 @@ const state = {};
 const controlSearch = async () => {
   //1>Get the query from view controller
   const query = searchView.getQuery(); //will be stored in this query
-  console.log(query);
   if (query) {
     //2>New Search object and add it to state
     state.search = new Search(query);
@@ -109,5 +109,8 @@ elements.recipe.addEventListener('click', e => {
 
     //Increase button is pressed
   }
-  console.log(state.recipe);
 });
+
+//The list controller
+//testing
+window.l = new List();
