@@ -4,6 +4,7 @@ import List from './modals/List';
 import { elements, renderLoader, clearLoader } from './views/base';
 import * as searchView from './views/searchView';
 import * as recipeView from './views/recipeView';
+import * as listView from './views/listView';
 
 //This is the global state of our app
 //1>Search object
@@ -11,7 +12,7 @@ import * as recipeView from './views/recipeView';
 //3>Shopping list object
 //4>Like recipe object
 const state = {};
-
+window.state = state;
 /**
  * Search
  * Controller */
@@ -95,6 +96,38 @@ const controlRecipe = async () => {
   window.addEventListener(event, controlRecipe)
 );
 
+/*
+ *LIST CONTROLLER
+ */
+const controlList = () => {
+  //Create new List if one isn't present
+  if (!state.list) {
+    state.list = new List();
+  }
+  //Add each ingredient to the list
+  state.recipe.ingredients.forEach(ele => {
+    const item = state.list.addItem(ele.count, ele.unit, ele.ingredient);
+    //Add the element to the UI
+    listView.renderItem(item);
+  });
+};
+
+//Handle delete and update list items events
+elements.shopping.addEventListener('click', e => {
+  const id = e.target.closest('.shopping__item').dataset.itemid;
+  //handle the delete event
+  if (e.target.matches('.shopping__delete, .shopping__delete *')) {
+    //Delete from state
+    state.list.deleteItem(id);
+    //delete from the UI
+    listView.deleteItem(id);
+  } //Handle the count update
+  else if (e.target.matches('.shopping__count-value')) {
+    const val = parseFloat(e.target.value);
+    state.list.updateCount(id, val);
+  }
+});
+
 //The increase and decrease button handlers
 elements.recipe.addEventListener('click', e => {
   if (e.target.matches('.btn-decrease,.btn-decrease *')) {
@@ -108,6 +141,8 @@ elements.recipe.addEventListener('click', e => {
     recipeView.updateServingsIngredients(state.recipe);
 
     //Increase button is pressed
+  } else if (e.target.matches('.recipe__btn--add,.recipe__btn--add *')) {
+    controlList();
   }
 });
 
