@@ -23,7 +23,7 @@ const formatCount = count => {
   }
   return '?';
 };
-export const renderRecipe = recipe => {
+export const renderRecipe = (recipe, isLiked) => {
   //Here the recipe is passed as one of the arguments
   const createIngredient = ingredient => `
   <li class="recipe__item">
@@ -79,7 +79,9 @@ export const renderRecipe = recipe => {
           </div>
           <button class="recipe__love">
               <svg class="header__likes">
-                  <use href="img/icons.svg#icon-heart-outlined"></use>
+                  <use href="img/icons.svg#icon-heart${
+                    isLiked ? '' : '-outlined'
+                  }"></use>
               </svg>
           </button>
         </div>
