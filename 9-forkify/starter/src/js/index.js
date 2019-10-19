@@ -14,7 +14,7 @@ import Likes from './modals/Likes';
 //3>Shopping list object
 //4>Like recipe object
 const state = {};
-window.state = state;
+
 /**
  * Search
  * Controller */
@@ -151,7 +151,7 @@ const controlLike = () => {
     likesView.toggleLikeBtn(true);
     //Add like to the UI list
     likesView.renderLike(newLike);
-    console.log(state.likes);
+
     //User has liked the current recipe
   } else {
     //Remove like from the state
@@ -160,7 +160,6 @@ const controlLike = () => {
     likesView.toggleLikeBtn(false);
     //Remove like from the UI list
     likesView.deleteLike(currentID);
-    console.log(state.likes);
   }
   likesView.toggleLikedMenu(state.likes.getNumLikes());
 };
@@ -201,4 +200,6 @@ window.addEventListener('load', () => {
 
 //The list controller
 //testing
-window.l = new List();
+(() => {
+  window.l = new List();
+})();
